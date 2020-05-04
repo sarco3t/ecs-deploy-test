@@ -21,7 +21,7 @@ func main() {
 		port = *bind
 	}
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		w.Write([]byte("version 0"))
+		w.Write([]byte("version 1"))
 		return
 	})
 
