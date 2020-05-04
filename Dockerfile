@@ -1,0 +1,11 @@
+FROM golang:1.13
+
+ENV GOOS linux
+ENV GOARCH amd64
+ENV CGO_ENABLED 0
+ENV GO111MODULE on
+ENV PORT 80
+WORKDIR /go/src/app
+COPY . .
+RUN go build -o app
+CMD ./app
