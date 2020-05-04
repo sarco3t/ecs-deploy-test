@@ -24,8 +24,9 @@
 #    and best practices on handling the access key credentials.
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - master
 
 name: Deploy to Amazon ECS
 
@@ -53,7 +54,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: 696263041869.dkr.ecr.us-east-1.amazonaws.com/deploy-test
+        ECR_REPOSITORY: deploy-test
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
@@ -75,6 +76,6 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: test-deploy-cluster-service
+        service: test-ecs-deploy-service
         cluster: test-deploy-cluster
         wait-for-service-stability: true
